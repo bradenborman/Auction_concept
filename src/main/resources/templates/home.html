@@ -43,7 +43,7 @@
                     th:class="${auction.secondsLeft} <= 180 ? 'almostOver' : 'notCloseYet'">
                     <span th:text="${auction.secondsLeft}" class="timeRemaining"></span><span class="displayTime"></span></td>
                 <td style="text-align: center;" th:text="'$' + ${#numbers.formatDecimal(auction.itemPrice, 1, 'DEFAULT', 2, 'DEFAULT')}"></td>
-                <td><button type="button"  class="btn btn-success">Bid now</button></td>
+                <td><button type="button"  class="btn btn-success bidBtn">Bid now</button></td>
             </tr>
             </tbody>
         </table>
@@ -82,6 +82,7 @@ function handleTime() {
             {
                 $(this).siblings("span").text("Completed");
                 $(this).parents("td").removeClass("almostOver")
+                $(this).parents("td").siblings("td").children("button.bidBtn").prop('disabled', true);
             }
 
     });
