@@ -16,6 +16,10 @@
         .timeRemaining {
             display: none;
         }
+
+        .almostOver {
+            color: red;
+        }
     </style>
 </head>
 <body>
@@ -23,20 +27,22 @@
         <table class="table">
             <thead>
             <tr>
-                <th>Item</th>
-                <th>Description</th>
-                <th>Price</th>
-                <th>Bids</th>
-                <th colspan=”2”>Time Remaining</th>
+                <th width="20%">Item</th>
+                <th width="40%">Description</th>
+                <th style="text-align: right;">Bids</th>
+                <th style="text-align: center;"><small>(hh:mm)</small><br />Time Remaining</th>
+                <th style="text-align: center;">Price</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="auction : ${data}">
                 <td th:text="${auction.itemShortName}"></td>
                 <td style="max-width: 250px;" th:text="${auction.itemDescription}"></td>
-                <td th:text="${auction.itemPrice}"></td>
-                <td th:text="${auction.numberOfBids}"></td>
-                <td style="text-align: center;  font-style: italic;"><span th:text="${auction.secondsLeft}" class="timeRemaining"></span><span class="displayTime"></span></td>
+                <td style="text-align: right;" th:text="${auction.numberOfBids}"></td>
+                <td style="text-align: center;  font-style: italic;"
+                    th:class="${auction.secondsLeft} <= 180 ? 'almostOver' : 'notCloseYet'">
+                    <span th:text="${auction.secondsLeft}" class="timeRemaining"></span><span class="displayTime"></span></td>
+                <td style="text-align: center;" th:text="'$' + ${#numbers.formatDecimal(auction.itemPrice, 1, 'DEFAULT', 2, 'DEFAULT')}"></td>
                 <td><button type="button"  class="btn btn-success">Bid now</button></td>
             </tr>
             </tbody>
@@ -51,6 +57,9 @@
 function handleTime() {
 
     $('.timeRemaining').each(function(i, obj) {
+
+           //.timeRemaining is hidden. The span shows the display
+
             var secondsLeft = $(this).text()
 
             var seconds = (secondsLeft % 60)
@@ -60,9 +69,20 @@ function handleTime() {
             if(seconds <= 9)
                 seconds = "0" + seconds;
 
-            $(this).text(secondsLeft - 1)
+            if(mins < 3)
+                $(this).parents("td").addClass("almostOver")
 
-           $(this).siblings("span").text(mins +  ":" + seconds);
+
+            if(seconds > 0 || mins > 0)
+            {
+                $(this).text(secondsLeft - 1)
+                $(this).siblings("span").text(mins +  ":" + seconds);
+            }
+            else
+            {
+                $(this).siblings("span").text("Completed");
+                $(this).parents("td").removeClass("almostOver")
+            }
 
     });
 
