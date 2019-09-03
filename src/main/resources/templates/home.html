@@ -12,20 +12,6 @@
     <link rel="stylesheet" type="text/css" href="/css/style.css"/>
     <link href='https://fonts.googleapis.com/css?family=Abril Fatface' rel='stylesheet'>
     <style>
-        .logo {
-           font-family: 'Abril Fatface';
-           font-size: 1.2em;
-           background-color: #39c2f3;
-           padding: 30px;
-           border-radius: 30px;
-           margin-left: 80px;
-           margin-top: 40px;
-           margin-bottom: 20px;
-           max-width: 180px;
-           text-align: center;
-           border: 2px solid red;
-        }
-
         .timeRemaining {
             display: none;
         }
@@ -53,7 +39,6 @@
     </style>
 </head>
 <body>
-<div class="logo">Shelter-Bay</div>
 <div class="container">
         <table class="table">
             <thead>
@@ -79,11 +64,11 @@
                 <td style="text-align: center;" th:text="'$' + ${#numbers.formatDecimal(auction.itemPrice, 1, 'DEFAULT', 2, 'DEFAULT')}"></td>
                 <td><button type="button"  class="btn btn-success bidBtn">Bid</button></td>
             </tr>
-              <tr style="display: none;" th:class="${auction.auctionId} + ' dropdown'">
+              <tr style="display: none;" th:id="${auction.auctionId}" th:class="${auction.auctionId} + ' dropdown'">
                     <td style="padding: 25px 5px 80px 5px;" colspan="5" class="text-right">
-                        <button class="btn btn-light">Increase $1</button>
-                        <button class="btn btn-light">Increase $5</button>
-                        <button class="btn btn-light">Increase $10</button>
+                        <button class="btn btn-light bid1">Increase $1</button>
+                        <button class="btn btn-light bid5">Increase $5</button>
+                        <button class="btn btn-light bid10">Increase $10</button>
                     </td>
                 </tr>
                 </tbody>
@@ -151,8 +136,34 @@ $(document).ready(function(){
             $(this).hide(300)
         });
 
+
+        $(".bid1").click(function(){
+              bid($(this).parents("tr").attr('id'), 1)
+        });
+
+        $(".bid5").click(function(){
+              bid($(this).parents("tr").attr('id'), 5)
+        });
+
+        $(".bid10").click(function(){
+              bid($(this).parents("tr").attr('id'), 10)
+        });
+
+
 });
 
+
+    function bid(auctionId, amount) {
+            $.post("/bid",
+                  {
+                    auctionId: auctionId,
+                    amountToIncrease: amount
+                  },
+                  function(data, status){
+                    console.log("Status: " + status);
+                    location.reload();
+              });
+    }
 </script>
 
 </body>

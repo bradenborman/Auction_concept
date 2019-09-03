@@ -2,6 +2,7 @@ package com.Shelterinsurance.auction;
 
 import java.time.LocalDateTime;
 
+
 public class Auction {
 
     private String auctionId;
@@ -9,7 +10,8 @@ public class Auction {
     private String itemDescription;
     private double itemPrice;
     private int numberOfBids;
-    private LocalDateTime lastBidTime;
+    private String lastBidTime;
+    private String expireTime;
     private int secondsLeft;
     private String photoName;
 
@@ -54,12 +56,20 @@ public class Auction {
         this.numberOfBids = numberOfBids;
     }
 
-    public LocalDateTime getLastBidTime() {
+    public String getLastBidTime() {
         return lastBidTime;
     }
 
-    public void setLastBidTime(LocalDateTime lastBidTime) {
+    public void setLastBidTime(String lastBidTime) {
         this.lastBidTime = lastBidTime;
+    }
+
+    public String getExpireTime() {
+        return expireTime;
+    }
+
+    public void setExpireTime(String expireTime) {
+        this.expireTime = expireTime;
     }
 
     public int getSecondsLeft() {
