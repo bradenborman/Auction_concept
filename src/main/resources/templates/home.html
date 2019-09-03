@@ -10,9 +10,22 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Chewy' rel='stylesheet'>
     <link rel="stylesheet" type="text/css" href="/css/style.css"/>
-    <link rel="icon" href="https://d2q79iu7y748jz.cloudfront.net/s/_squarelogo/36bcf6bb32a8d786a8325a269b69ea6a" type="image/x-icon" />
-
+    <link href='https://fonts.googleapis.com/css?family=Abril Fatface' rel='stylesheet'>
     <style>
+        .logo {
+           font-family: 'Abril Fatface';
+           font-size: 2em;
+           background-color: #39c2f3;
+           padding: 30px;
+           border-radius: 30px;
+           margin-left: 80px;
+           margin-top: 40px;
+           margin-bottom: 80px;
+           max-width: 250px;
+           text-align: center;
+           border: 2px solid red;
+        }
+
         .timeRemaining {
             display: none;
         }
@@ -23,6 +36,7 @@
     </style>
 </head>
 <body>
+<div class="logo">Shelter-Bay</div>
 <div class="container">
         <table class="table">
             <thead>
@@ -34,24 +48,29 @@
                 <th style="text-align: center;">Price</th>
             </tr>
             </thead>
-            <tbody>
-            <tr th:each="auction : ${data}">
+            <div class="auction" th:each="auction : ${data}">
+                <tbody>
+            <tr>
                 <td th:text="${auction.itemShortName}"></td>
                 <td style="max-width: 250px;" th:text="${auction.itemDescription}"></td>
                 <td style="text-align: right;" th:text="${auction.numberOfBids}"></td>
                 <td style="text-align: center;  font-style: italic;"
-                    th:class="${auction.secondsLeft} <= 180 ? 'almostOver' : 'notCloseYet'">
+                    th:class="${auction.secondsLeft} <= 180 ? 'almostOver' : ''">
                     <span th:text="${auction.secondsLeft}" class="timeRemaining"></span><span class="displayTime"></span></td>
                 <td style="text-align: center;" th:text="'$' + ${#numbers.formatDecimal(auction.itemPrice, 1, 'DEFAULT', 2, 'DEFAULT')}"></td>
-                <td><button type="button"  class="btn btn-success bidBtn">Bid now</button></td>
+                <td><button type="button"  class="btn btn-success bidBtn">Bid</button></td>
             </tr>
-            </tbody>
+              <tr style="display: none;" th:class="${auction.auctionId} + ' dropdown'">
+                    <td style="padding: 25px 5px 80px 5px;" colspan="5" class="text-right">
+                        <button class="btn btn-light">Increase $1</button>
+                        <button class="btn btn-light">Increase $5</button>
+                        <button class="btn btn-light">Increase $10</button>
+                    </td>
+                </tr>
+                </tbody>
+            </div>
         </table>
 </div>
-
-<!-- <script src="javascript/script.js"></script> -->
-
-
 <script>
 
 function handleTime() {
@@ -82,6 +101,7 @@ function handleTime() {
             {
                 $(this).siblings("span").text("Completed");
                 $(this).parents("td").removeClass("almostOver")
+                 $(this).parents("tr").next().hide(100)
                 $(this).parents("td").siblings("td").children("button.bidBtn").prop('disabled', true);
             }
 
@@ -91,9 +111,13 @@ function handleTime() {
 
 $(document).ready(function(){
 
-handleTime()
-setInterval(function(){ handleTime() }, 1000);
+    handleTime()
+    setInterval(function(){ handleTime() }, 1000);
 
+        $(".bidBtn").click(function(){
+            $('.dropdown').hide()
+            $(this).parents("tr").next().toggle(150)
+        });
 
 });
 

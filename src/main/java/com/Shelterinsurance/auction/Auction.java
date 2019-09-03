@@ -4,12 +4,22 @@ import java.time.LocalDateTime;
 
 public class Auction {
 
+    private String auctionId;
     private String itemShortName;
     private String itemDescription;
     private double itemPrice;
     private int numberOfBids;
     private LocalDateTime lastBidTime;
     private int secondsLeft;
+
+
+    public String getAuctionId() {
+        return auctionId;
+    }
+
+    public void setAuctionId(String auctionId) {
+        this.auctionId = auctionId;
+    }
 
     public String getItemShortName() {
         return itemShortName;

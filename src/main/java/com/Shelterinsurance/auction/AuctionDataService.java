@@ -24,7 +24,8 @@ class AuctionDataService {
             ObjectMapper objectMapper = new ObjectMapper();
             List<Auction> data = objectMapper.readValue(auctionDataFile, new TypeReference<List<Auction>>() {});
             data.forEach(auction -> {
-                auction.setSecondsLeft(rand.nextInt(200));
+                auction.setSecondsLeft(rand.nextInt(150));
+                auction.setAuctionId(String.valueOf(rand.nextInt(1000)));
             })
             ;
             return data;
