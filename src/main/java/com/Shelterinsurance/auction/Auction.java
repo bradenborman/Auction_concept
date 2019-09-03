@@ -11,6 +11,7 @@ public class Auction {
     private int numberOfBids;
     private LocalDateTime lastBidTime;
     private int secondsLeft;
+    private String photoName;
 
 
     public String getAuctionId() {
@@ -67,5 +68,13 @@ public class Auction {
 
     public void setSecondsLeft(int secondsLeft) {
         this.secondsLeft = secondsLeft;
+    }
+
+    public String getPhotoName() {
+        return photoName;
+    }
+
+    public void setPhotoName(String photoName) {
+        this.photoName = photoName;
     }
 }

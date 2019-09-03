@@ -14,14 +14,14 @@
     <style>
         .logo {
            font-family: 'Abril Fatface';
-           font-size: 2em;
+           font-size: 1.2em;
            background-color: #39c2f3;
            padding: 30px;
            border-radius: 30px;
            margin-left: 80px;
            margin-top: 40px;
-           margin-bottom: 80px;
-           max-width: 250px;
+           margin-bottom: 20px;
+           max-width: 180px;
            text-align: center;
            border: 2px solid red;
         }
@@ -33,6 +33,23 @@
         .almostOver {
             color: red;
         }
+
+        .modal:hover {
+            cursor: pointer;
+        }
+
+        .modal {
+            display: none;
+            position: absolute;
+            width: 33%;
+            left: 33%;
+            top: 200px;
+            height: 450px;
+            background-color: white;
+            background-repeat: no-repeat;
+             background-size: cover;
+            border: 3px solid black;
+        }
     </style>
 </head>
 <body>
@@ -41,6 +58,7 @@
         <table class="table">
             <thead>
             <tr>
+                <th></th>
                 <th width="20%">Item</th>
                 <th width="40%">Description</th>
                 <th style="text-align: right;">Bids</th>
@@ -51,6 +69,7 @@
             <div class="auction" th:each="auction : ${data}">
                 <tbody>
             <tr>
+                <td><img th:if="${auction.photoName} != null" class="imgPrev" alt="Image" th:src="@{'image/' + ${auction.photoName}}" width="80" height="80"/></td>
                 <td th:text="${auction.itemShortName}"></td>
                 <td style="max-width: 250px;" th:text="${auction.itemDescription}"></td>
                 <td style="text-align: right;" th:text="${auction.numberOfBids}"></td>
@@ -71,6 +90,10 @@
             </div>
         </table>
 </div>
+
+
+<div class="modal"></div>
+
 <script>
 
 function handleTime() {
@@ -117,6 +140,15 @@ $(document).ready(function(){
         $(".bidBtn").click(function(){
             $('.dropdown').hide()
             $(this).parents("tr").next().toggle(150)
+        });
+
+        $(".imgPrev").click(function(){
+            $('.modal').show()
+            $('.modal').css('backgroundImage', 'url(' + $(this).attr('src') + ')');
+        });
+
+        $(".modal").click(function(){
+            $(this).hide(300)
         });
 
 });
