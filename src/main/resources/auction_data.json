@@ -1,0 +1,23 @@
+[
+  {
+    "itemShortName": "Dog Toothbrush/Paste",
+    "itemDescription":"A toothbrush and toothpaste for a small dog",
+    "itemPrice":3.47,
+    "numberOfBids": 3,
+    "lastBidTime":null
+  },
+  {
+    "itemShortName": "Hat",
+    "itemDescription":"Brown Hat worn once",
+    "itemPrice": 105.05,
+    "numberOfBids": 2,
+    "lastBidTime":null
+  },
+  {
+    "itemShortName": "Pet Portraits & Pour Painting",
+    "itemDescription":"I am taking orders for my Pet Portrait Ornaments. You can text or email digital photos to me. My price is still",
+    "itemPrice": 15.0,
+    "numberOfBids": 6,
+    "lastBidTime":null
+  }
+]
