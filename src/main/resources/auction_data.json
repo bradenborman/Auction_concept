@@ -19,5 +19,40 @@
     "itemPrice": 15.0,
     "numberOfBids": 6,
     "lastBidTime":null
+  },
+  {
+    "itemShortName": "Large Glass Vases",
+    "itemDescription":"Large glass vases - both measure slightly over 16 tall and are heavy.",
+    "itemPrice": 10.0,
+    "numberOfBids": 6,
+    "lastBidTime":null
+  },
+  {
+    "itemShortName": "Hot wheels garage",
+    "itemDescription": "Hot Wheels Ultimate Garage over 3 feet tall with climbing gorilla and dinosaur. Our son got it for Christmas but rarely plays with it. The car elevator has a piece broken off but it still works.",
+    "itemPrice": 45,
+    "numberOfBids": 3,
+    "lastBidTime":null
+  },
+  {
+    "itemShortName": "Occupied Japan Items",
+    "itemDescription": "I have a large collection of items that were made in occupied Japan. There are many different types of items, from bisque figures to metal boxes to old lighters. I have attached a few pictures to this ad, but have literally over 1000 pieces",
+    "itemPrice": 200,
+    "numberOfBids": 10,
+    "lastBidTime":null
+  },
+  {
+    "itemShortName": "Nintendo Labo",
+    "itemDescription": "New Nintendo Labo Variety Kit. Opened, but never used",
+    "itemPrice": 40,
+    "numberOfBids": 2,
+    "lastBidTime":null
+  },
+  {
+    "itemShortName": "Twin X-Long Bedding",
+    "itemDescription": "Set of white jersey knit sheets from Bed Bath and Beyond",
+    "itemPrice": 15,
+    "numberOfBids": 1,
+    "lastBidTime":null
   }
 ]
