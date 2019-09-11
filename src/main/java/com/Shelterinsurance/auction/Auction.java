@@ -1,8 +1,5 @@
 package com.Shelterinsurance.auction;
 
-import java.time.LocalDateTime;
-
-
 public class Auction {
 
     private String auctionId;

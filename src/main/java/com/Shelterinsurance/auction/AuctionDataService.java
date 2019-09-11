@@ -31,7 +31,7 @@ class AuctionDataService {
             ObjectMapper objectMapper = new ObjectMapper();
             List<Auction> data = objectMapper.readValue(auctionDataFile, new TypeReference<List<Auction>>() {});
             data.forEach(auction -> {
-                auction.setSecondsLeft(calculateSecondsLeft(auction.getExpireTime()));
+                auction.setSecondsLeft(AuctionExpireCalc.calculateSecondsLeft(auction.getExpireTime()));
             })
             ;
             return data;
@@ -42,16 +42,7 @@ class AuctionDataService {
 
     }
 
-    private int calculateSecondsLeft(String expireTimeStr) {
-        if(expireTimeStr == null)
-            return 0;
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        LocalDateTime expireTime = LocalDateTime.parse(expireTimeStr, formatter);
-        long mins = LocalDateTime.now().until(expireTime, ChronoUnit.SECONDS);
-
-        return (int) mins;
-    }
 
     void updateAll() {
 
@@ -76,7 +67,10 @@ class AuctionDataService {
     }
 
 
-    void submitBid(Bid bid) {
+    Auction submitBid(Bid bid) {
+
+        Auction auctionToReturn = new Auction();
+
         List<Auction> currentData = getData();
         currentData.forEach(auction -> {
             if(auction.getAuctionId().equals(bid.getAuctionId())) {
@@ -84,16 +78,25 @@ class AuctionDataService {
                 auction.setLastBidTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
                 auction.setExpireTime(LocalDateTime.now().plusMinutes(15).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
                 auction.setNumberOfBids(auction.getNumberOfBids()+ 1);
+
+                auctionToReturn.setItemPrice(auction.getItemPrice());
+                auctionToReturn.setLastBidTime(auction.getLastBidTime());
+                auctionToReturn.setExpireTime(auction.getExpireTime());
+                auctionToReturn.setNumberOfBids(auction.getNumberOfBids());
+                auctionToReturn.setSecondsLeft(AuctionExpireCalc.calculateSecondsLeft(auction.getExpireTime()));
+                auctionToReturn.setAuctionId(auction.getAuctionId());
+
             }
         });
 
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-
             objectMapper.writeValue(new FileWriter(AuctionFileManager.createIfNecessary()), currentData);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        return auctionToReturn;
     }
 
 

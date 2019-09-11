@@ -29,10 +29,11 @@ public class ViewController {
         return "redirect:/";
     }
 
-    @RequestMapping(value = "/bid", method = RequestMethod.POST)
-    public ResponseEntity<Bid> bid(@RequestParam Map<String, String> body){
-        Bid bid = new Bid(Double.valueOf(body.get("amountToIncrease")), body.get("auctionId"));
-        auctionDataService.submitBid(bid);
-        return ResponseEntity.ok(bid);
-    }
+//    @RequestMapping(value = "/bid", method = RequestMethod.POST)
+//    public ResponseEntity<Bid> bid(@RequestParam Map<String, String> body){
+//        Bid bid = new Bid(Double.valueOf(body.get("amountToIncrease")), body.get("auctionId"));
+//        auctionDataService.submitBid(bid);
+//        return ResponseEntity.ok(bid);
+//    }
+
 }
