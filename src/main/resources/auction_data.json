@@ -32,7 +32,8 @@
     "itemDescription": "Hot Wheels Ultimate Garage over 3 feet tall with climbing gorilla and dinosaur. Our son got it for Christmas but rarely plays with it. The car elevator has a piece broken off but it still works.",
     "itemPrice": 45,
     "numberOfBids": 3,
-    "lastBidTime":null
+    "lastBidTime":null,
+    "photoName" : "hotwheels.gif"
   },
   {
     "itemShortName": "Occupied Japan Items",

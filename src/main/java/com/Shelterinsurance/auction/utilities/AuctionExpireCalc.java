@@ -1,4 +1,4 @@
-package com.Shelterinsurance.auction;
+package com.Shelterinsurance.auction.utilities;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

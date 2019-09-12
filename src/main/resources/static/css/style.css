@@ -1,4 +1,12 @@
 .newBid {
-    background-color:#d5e2dd;
+    background-color: #fef4f1;
     transition: background-color 1.3s;
+}
+
+.highBid {
+    text-align: center;
+    color: #17b3c4;
+    font-weight: bold;
+    font-size: 1.4em;
+    font-family: 'Mitr';
 }

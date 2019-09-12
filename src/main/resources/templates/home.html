@@ -13,6 +13,7 @@
     <script src="/webjars/sockjs-client/sockjs.min.js"></script>
     <script src="/webjars/stomp-websocket/stomp.min.js"></script>
     <script src="/js/message-broker.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Mitr' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=Abril Fatface' rel='stylesheet'>
     <style>
         .timeRemaining {
@@ -50,9 +51,9 @@
             <th></th>
             <th width="20%">Item</th>
             <th width="40%">Description</th>
-            <th style="text-align: right;">Bids</th>
-            <th style="text-align: center;"><small>(hh:mm)</small><br/>Time Remaining</th>
-            <th style="text-align: center;">Price</th>
+            <th width="10%" style="text-align: right;">Bids</th>
+            <th width="10%" style="text-align: center;"><small>(hh:mm)</small><br/>Time Remaining</th>
+            <th width="20%" style="text-align: center;">Price</th>
         </tr>
         </thead>
         <div class="auction" th:each="auction : ${data}">
@@ -69,7 +70,7 @@
                     </span><span class="displayTime"></span></td>
                 <td class="currentPrice" style="text-align: center;"
                     th:text="'$' + ${#numbers.formatDecimal(auction.itemPrice, 1, 'DEFAULT', 2, 'DEFAULT')}"></td>
-                <td>
+                <td class="btnCOL">
                     <button type="button" class="btn btn-success bidBtn">Bid</button>
                 </td>
             </tr>

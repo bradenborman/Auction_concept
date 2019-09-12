@@ -1,4 +1,4 @@
-package com.Shelterinsurance.auction;
+package com.Shelterinsurance.auction.config.websocket;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

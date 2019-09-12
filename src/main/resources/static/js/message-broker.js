@@ -1,5 +1,7 @@
 var stompClient = null;
 
+var RANDOM_BIDDER_ID = Math.floor((Math.random() * 10000) + 1);
+
 function connectMessageBroker() {
     var socket = new SockJS('/gs-guide-websocket');
     stompClient = Stomp.over(socket);
@@ -17,6 +19,7 @@ function handleBid(response) {
     var secondsLeft = response.secondsLeft
     var numberOfBids = response.numberOfBids
     var itemPrice = response.itemPrice
+    var bidderId = response.bidderId
 
     //alert(auctionId + " " + secondsLeft + " " + numberOfBids + " " + itemPrice)
 
@@ -34,18 +37,40 @@ function handleBid(response) {
 
         $('#'+auctionId).find("td.currentPrice").text("$" + numberWithCommas(itemPrice.toFixed(2)));
 
-
         $('#'+auctionId).find("td.numberOfBids").text(numberOfBids);
+
+        showHighBidLabel(auctionId, bidderId)
+
 }
 
 
 
 function placeBid(auctionId, amount) {
 
-   if(stompClient.connected)
-        stompClient.send("/app/placeBid", {}, JSON.stringify({'auctionId': auctionId, 'amount' : amount}));
+   if(stompClient.connected) {
+        stompClient.send("/app/placeBid", {}, JSON.stringify({'auctionId': auctionId, 'amount' : amount, 'bidderId' : RANDOM_BIDDER_ID}));
+   }
 
 }
+
+function showHighBidLabel(auctionId, bidderId) {
+
+    //check to see if label is already there. and if bidder Id matches this client
+
+    if(bidderId == RANDOM_BIDDER_ID)
+    {
+            $('#'+auctionId).find("button.bidBtn").hide()
+            $('#'+auctionId).find(".highBid").remove() //IF already there remove it.
+            $('#'+auctionId).find("td.btnCOL").append("<p class='highBid'>Highest<br />Bidder</p>");
+    }
+    else
+    {
+             $('#'+auctionId).find("button.bidBtn").show()
+             $('#'+auctionId).find(".highBid").remove() //IF already there remove it.
+    }
+
+}
+
 
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
