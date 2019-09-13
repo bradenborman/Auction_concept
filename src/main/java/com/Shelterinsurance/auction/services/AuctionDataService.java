@@ -3,6 +3,7 @@ package com.Shelterinsurance.auction.services;
 import com.Shelterinsurance.auction.utilities.AuctionExpireCalc;
 import com.Shelterinsurance.auction.models.Auction;
 import com.Shelterinsurance.auction.models.Bid;
+import com.Shelterinsurance.auction.utilities.RandomUtil;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
@@ -25,7 +27,7 @@ public class AuctionDataService {
 
     public List<Auction> getData() {
 
-       File auctionDataFile = AuctionFileManager.createIfNecessary();
+       File auctionDataFile = AuctionFileManager.createAuctionDataIfNecessary();
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             List<Auction> data = objectMapper.readValue(auctionDataFile, new TypeReference<List<Auction>>() {});
@@ -46,18 +48,20 @@ public class AuctionDataService {
 
         List<Auction> currentData = getData();
 
+        Random random = new Random();
+
         currentData.forEach(auction -> {
             if(auction.getAuctionId() == null)
                 auction.setAuctionId(String.valueOf(atomicInteger.getAndIncrement()));
 
             auction.setLastBidTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-            auction.setExpireTime(LocalDateTime.now().plusMinutes(15).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+            auction.setExpireTime(LocalDateTime.now().plusMinutes(RandomUtil.getRandomNumberInRange(7, 15)).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         });
 
         ObjectMapper objectMapper = new ObjectMapper();
         try {
 
-            objectMapper.writeValue(new FileWriter(AuctionFileManager.createIfNecessary()), currentData);
+            objectMapper.writeValue(new FileWriter(AuctionFileManager.createAuctionDataIfNecessary()), currentData);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -91,7 +95,7 @@ public class AuctionDataService {
 
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            objectMapper.writeValue(new FileWriter(AuctionFileManager.createIfNecessary()), currentData);
+            objectMapper.writeValue(new FileWriter(AuctionFileManager.createAuctionDataIfNecessary()), currentData);
         } catch (IOException e) {
             e.printStackTrace();
         }

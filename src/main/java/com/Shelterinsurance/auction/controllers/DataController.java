@@ -2,7 +2,10 @@ package com.Shelterinsurance.auction.controllers;
 
 
 import com.Shelterinsurance.auction.models.Auction;
+import com.Shelterinsurance.auction.models.Bid;
+import com.Shelterinsurance.auction.models.BidReport;
 import com.Shelterinsurance.auction.services.AuctionDataService;
+import com.Shelterinsurance.auction.services.BidHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +20,9 @@ public class DataController {
 
     @Autowired
     AuctionDataService auctionDataService;
+
+    @Autowired
+    BidHistoryService bidHistoryService;
 
     @GetMapping("/data")
     public List<Auction> welcome() {
@@ -35,4 +41,20 @@ public class DataController {
         }
     }
 
+
+    @GetMapping("/get-auction-bids/id/{auctionID}")
+    public BidReport bidReportByauctionID(@PathVariable String auctionID) {
+        BidReport bidReport = new BidReport();
+        bidReport.setAuction(auctionDataService.getData().stream().filter(auc -> auc.getAuctionId().equals(auctionID)).findFirst().orElse(new Auction()));
+        bidReport.setBidsForItem(bidHistoryService.getAllBidsByAuctionId(auctionID));
+        return bidReport;
+    }
+
+    @GetMapping("/get-auction-bids/name/{name}")
+    public BidReport bidReportByname(@PathVariable String name) {
+        BidReport bidReport = new BidReport();
+        bidReport.setAuction(auctionDataService.getData().stream().filter(auc -> auc.getItemShortName().equals(name)).findFirst().orElse(new Auction()));
+        bidReport.setBidsForItem(bidHistoryService.getAllBidsByAuctionId(bidReport.getAuction().getAuctionId()));
+        return bidReport;
+    }
 }

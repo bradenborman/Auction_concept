@@ -5,11 +5,8 @@ public class Bid {
     private double amount;
     private String auctionId;
     private String bidderId;
+    private String timeBidWasPlaced;
 
-    public Bid(double amount, String auctionId) {
-        this.amount = amount;
-        this.auctionId = auctionId;
-    }
 
     public double getAmount() {
         return amount;
@@ -34,5 +31,13 @@ public class Bid {
 
     public void setBidderId(String bidderId) {
         this.bidderId = bidderId;
+    }
+
+    public String getTimeBidWasPlaced() {
+        return timeBidWasPlaced;
+    }
+
+    public void setTimeBidWasPlaced(String timeBidWasPlaced) {
+        this.timeBidWasPlaced = timeBidWasPlaced;
     }
 }
